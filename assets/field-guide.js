@@ -87,10 +87,16 @@
   }
   function updatePaper() {
     const y = mast.getBoundingClientRect().bottom - 8;
-    const onPaper = paper.some(function (section) {
+    const under = paper.find(function (section) {
       const rect = section.getBoundingClientRect();
       return rect.top <= y && rect.bottom > y;
     });
+    const onPaper = !!under;
+    if (under) {
+      const bg = getComputedStyle(under).backgroundColor;
+      if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)") mast.style.setProperty("--band", bg);
+      else mast.style.removeProperty("--band");
+    }
     mast.classList.toggle("on-paper", onPaper);
     if (!projects) return;
     const rect = projects.getBoundingClientRect(),

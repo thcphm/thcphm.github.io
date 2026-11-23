@@ -202,6 +202,23 @@ html[lang="en"] [lang="vi"],
 .mast > * {
   pointer-events: auto;
 }
+/* Paper band behind the floating header, so body text never shows between the pills */
+.mast::before {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(max(0.95rem, env(safe-area-inset-top)) + 3.5rem);
+  background: linear-gradient(180deg, var(--band, var(--paper)) 0%, var(--band, var(--paper)) 72%, transparent 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.mast.on-paper::before {
+  opacity: 1;
+}
 .identity {
   justify-self: start;
   display: inline-flex;
@@ -229,7 +246,7 @@ html[lang="en"] [lang="vi"],
   display: flex;
   align-items: center;
   color: #f2f3e8;
-  background: rgba(21, 36, 29, 0.87);
+  background: rgba(21, 36, 29, 0.94);
   border: 1px solid #c7d3b652;
   border-radius: 99rem;
   backdrop-filter: blur(12px);
@@ -276,9 +293,22 @@ html[lang="en"] [lang="vi"],
   background: linear-gradient(90deg, currentColor 49%, transparent 50%);
   vertical-align: middle;
 }
+.identity {
+  border: 1px solid #c7d3b652;
+  border-radius: 99rem;
+  background: rgba(21, 36, 29, 0.94);
+  backdrop-filter: blur(12px);
+  padding-inline: 0.62rem 0.8rem;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
 .mast.on-paper .identity {
   color: var(--ink);
   text-shadow: none;
+  background: color-mix(in srgb, var(--paper) 96%, transparent);
+  border-color: var(--line);
 }
 .mast.on-paper .brand-mark,
 .mast.on-paper .brand-dot {
@@ -301,6 +331,7 @@ html[data-theme="dark"] .mast.on-paper .brand-dot {
 .chip,
 .node-kind,
 .live,
+.internal,
 .rail,
 .scroll-cue,
 .desk-readout,
@@ -659,6 +690,7 @@ summary::-webkit-details-marker {
 .materials,
 .node-kind,
 .live,
+.internal,
 .chip {
   color: var(--quiet);
   font-size: 0.68rem;
@@ -851,6 +883,85 @@ details[open] > summary > .expand-mark::after {
 .cover .deck,
 .interlude .deck {
   margin-bottom: 1.5rem;
+}
+/* Product cover: a real product screenshot framed as a browser window */
+.product-cover {
+  background: radial-gradient(110% 95% at 82% 45%, #284636 0%, #14251c 52%, var(--dark) 100%);
+}
+.cover.product-cover::before,
+.interlude.product-cover::before {
+  background: linear-gradient(0deg, #0b1712a8, transparent 32%);
+}
+.product-cover .cover-image {
+  inset: auto;
+  top: 50%;
+  right: var(--inset);
+  left: auto;
+  z-index: -2;
+  width: min(44vw, 820px);
+  height: auto;
+  transform: translateY(-47%);
+  border-radius: 0.9rem;
+  overflow: hidden;
+  background: #f6f7f1;
+  box-shadow:
+    0 0 0 1px #d9e2cc40,
+    0 2.4rem 5rem #020a06b8;
+}
+.product-cover .cover-image::before {
+  content: "";
+  display: block;
+  height: 1.7rem;
+  background:
+    radial-gradient(circle at 1.05rem 50%, #d9a28f 0.24rem, transparent 0.26rem),
+    radial-gradient(circle at 1.8rem 50%, #e2c98d 0.24rem, transparent 0.26rem),
+    radial-gradient(circle at 2.55rem 50%, #a9c49a 0.24rem, transparent 0.26rem),
+    #e6e9dc;
+  border-bottom: 1px solid #cfd4c4;
+}
+.product-cover .cover-image img {
+  position: static;
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.product-cover .cover-type > *,
+.product-cover .inter-type > * {
+  max-width: min(34rem, calc(100vw - 2 * var(--inset) - min(44vw, 820px) - 3rem));
+}
+.product-cover h1,
+.product-cover h2 {
+  font-size: clamp(3.4rem, 6.2vw, 7.2rem);
+}
+@media (max-width: 900px) {
+  .cover.product-cover,
+  .interlude.product-cover {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .product-cover .cover-image {
+    position: relative;
+    order: 2;
+    top: auto;
+    right: auto;
+    width: auto;
+    margin: 0 var(--inset) 3.2rem;
+    transform: none;
+  }
+  .product-cover .cover-type,
+  .product-cover .inter-type {
+    padding-bottom: 2.2rem;
+  }
+  .product-cover .cover-type > *,
+  .product-cover .inter-type > * {
+    max-width: none;
+  }
+  .product-cover h1,
+  .product-cover h2 {
+    font-size: clamp(3rem, 12.6vw, 5.4rem);
+  }
 }
 .cover.studio-cover::before {
   background: linear-gradient(90deg, #191b1ed9, #151e2038 67%), linear-gradient(0deg, #0e1c1990, transparent 50%);
@@ -1515,8 +1626,29 @@ html:not(.js) .mast-tools {
   .case-record > summary {
     gap: 0.45rem;
   }
-  .case-record .node-kind {
+  .case-record .node-kind,
+  .case-record .live,
+  .case-record .internal {
     font-size: 0.6rem;
+  }
+  /* Row 1: name + toggle. Row 2: type and status labels */
+  .case-record > summary {
+    row-gap: 0.3rem;
+  }
+  .case-record > summary .case-name {
+    flex: 1 1 calc(100% - 2rem);
+  }
+  .case-record > summary .expand-mark {
+    order: 1;
+    margin-left: 0;
+  }
+  .case-record > summary .node-kind {
+    order: 2;
+    margin-left: 0;
+  }
+  .case-record > summary .live,
+  .case-record > summary .internal {
+    order: 3;
   }
   .desk-controls {
     justify-content: center;
@@ -1833,6 +1965,7 @@ html:not(.js) .mast-tools {
 .node-kind,
 .chip,
 .live,
+.internal,
 .proj-count,
 .eco-meta {
   font-size: 0.78rem;
@@ -1912,4 +2045,9 @@ html:not(.js) .mast-tools {
   .spec-slot {
     display: none;
   }
+}
+/* 404: the cover fills the screen, no empty band below it */
+.page-missing .cover {
+  min-height: 100vh;
+  min-height: 100svh;
 }
