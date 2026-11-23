@@ -1,0 +1,843 @@
+<!doctype html>
+<html
+  lang="vi"
+  data-theme="light"
+  data-title-vi="Phạm Trí Thức · Hành trình CV 3D"
+  data-title-en="Phạm Trí Thức · A 3D CV journey"
+  data-desc-vi="Khám phá góc lập trình, dự án và kỹ năng của Phạm Trí Thức trong một hành trình 3D."
+  data-desc-en="Explore Phạm Trí Thức’s software, projects and skills in a scroll-driven 3D world."
+>
+  <head
+    ><meta charset="utf-8" /><meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover" /><meta
+      name="theme-color"
+      content="#14241d" />
+    <title>Phạm Trí Thức · Hành trình CV 3D</title
+    ><meta
+      name="description"
+      content="Khám phá góc lập trình, dự án và kỹ năng của Phạm Trí Thức trong một hành trình 3D." /><script>
+      document.documentElement.classList.add("js");
+      try {
+        if (localStorage.getItem("tp-lang") === "en") document.documentElement.lang = "en";
+        if (localStorage.getItem("tp-theme") === "dark") document.documentElement.dataset.theme = "dark";
+      } catch (e) {}
+    </script>
+    <link rel="icon" href="/assets/field/tp-mark.svg" /><link rel="stylesheet" href="/assets/field-guide.css?v=tp" />
+    <script defer src="/script.js?v=field-4"></script
+    ><script defer src="/assets/field-guide.js"></script
+    ><link rel="stylesheet" href="/assets/workshop-viewer.css?v=6" /><script
+      defer
+      src="/assets/workshop-viewer.js?v=6"
+    ></script
+  ></head>
+  <body id="top" class="page-home"
+    ><a class="skip" href="#content"><span lang="vi">Đến nội dung</span><span lang="en">Skip to content</span></a>
+    <header class="mast"
+      ><a
+        class="identity"
+        href="/"
+        aria-label="Phạm Trí Thức · Trang chủ"
+        data-label-vi="Phạm Trí Thức · Trang chủ"
+        data-label-en="Phạm Trí Thức · Home"
+        ><svg class="brand-mark" viewBox="-2 -2 112 104" aria-hidden="true" focusable="false">
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M0 0H78A30 30 0 0 1 78 60H62V100H48V14H34V100H20V14H0Z M62 14V46H76A16 16 0 0 0 76 14Z"
+          /></svg
+        ><span>thcphm<span class="brand-dot">.</span></span></a
+      >
+      <nav
+        id="site-nav"
+        aria-label="Điều hướng chính"
+        data-label-vi="Điều hướng chính"
+        data-label-en="Main navigation"
+        ><a href="/" aria-current="page"><span lang="vi">Hành trình</span><span lang="en">Journey</span></a
+        ><a href="/#du-an"><span lang="vi">Dự án</span><span lang="en">Projects</span></a
+        ><a href="/solutions/">Solutions</a><a href="/studio/">Studio</a></nav
+      ><div class="mast-tools"
+        ><button
+          id="lang-toggle"
+          type="button"
+          aria-label="Switch to English"
+          data-label-vi="Switch to English"
+          data-label-en="Đổi sang tiếng Việt"
+          ><span lang="vi">EN</span><span lang="en">VI</span></button
+        ><button
+          id="theme-toggle"
+          type="button"
+          aria-label="Đổi giao diện sáng tối"
+          data-label-vi="Đổi giao diện sáng tối"
+          data-label-en="Change colour theme"
+          aria-pressed="false"
+          ><span class="theme-disc" aria-hidden="true"></span></button
+        ><button
+          id="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Mở trình đơn"
+          data-label-vi="Mở trình đơn"
+          data-label-en="Open menu"
+          ><span aria-hidden="true">☰</span></button
+        ></div
+      ></header
+    >
+    <main id="content"
+      ><section
+        class="tour"
+        id="ho-so"
+        aria-label="Hành trình CV 3D"
+        data-label-vi="Hành trình CV 3D"
+        data-label-en="The 3D CV journey"
+        ><div class="marker mk-code" id="ma-nguon" aria-hidden="true"></div
+        ><div class="marker mk-hardware" id="bo-mach" aria-hidden="true"></div>
+        <div class="tour-stage"
+          ><div class="world-visual" aria-hidden="true"
+            ><picture class="world-plate" data-plate="0"
+              ><source media="(max-aspect-ratio: 4/5)" srcset="/assets/field/mobile/profile.webp" /><img
+                src="/assets/field/profile.webp"
+                alt=""
+                draggable="false"
+                fetchpriority="high" /></picture
+            ><picture class="world-plate" data-plate="1"
+              ><source media="(max-aspect-ratio: 4/5)" srcset="/assets/field/mobile/code.webp" /><img
+                src="/assets/field/code.webp"
+                alt=""
+                draggable="false"
+                loading="lazy" /></picture
+            ><picture class="world-plate" data-plate="2"
+              ><source media="(max-aspect-ratio: 4/5)" srcset="/assets/field/mobile/hardware.webp" /><img
+                src="/assets/field/hardware.webp"
+                alt=""
+                draggable="false"
+                loading="lazy" /></picture
+            ><canvas id="world-canvas" hidden></canvas></div
+          ><div class="world-shade"></div><div class="page-lines" aria-hidden="true"></div>
+          <div class="tour-copy inset"
+            ><article class="chapter-copy active" data-copy="0"
+              ><p class="eyebrow"
+                ><span lang="vi">Công nghệ thông tin</span><span lang="en">Information technology</span></p
+              ><h1>Phạm<br />Trí Thức.</h1
+              ><p class="deck"
+                ><span lang="vi">Mình viết phần mềm, thiết kế API và dựng những thế giới 3D trên trình duyệt.</span
+                ><span lang="en">I build software, design APIs and create 3D worlds for the browser.</span></p
+              ><a class="pill" href="#ma-nguon"
+                ><span lang="vi">Bắt đầu khám phá</span><span lang="en">Start exploring</span></a
+              ></article
+            ><article class="chapter-copy" data-copy="1"
+              ><p class="eyebrow"
+                ><span lang="vi">Không gian tương tác</span><span lang="en">Interactive spaces</span></p
+              ><h2
+                ><span lang="vi">Xưởng<br />của Thức.</span><span lang="en">Inside my<br />workshop.</span></h2
+              ><p class="deck"
+                ><span lang="vi"
+                  >Một căn xưởng có 12 phòng. Mình dùng Three.js và Firebase để bạn có thể tự đi từ phòng này sang
+                  phòng khác.</span
+                ><span lang="en"
+                  >A workshop with twelve rooms. I used Three.js and Firebase to let you find your own way through
+                  them.</span
+                ></p
+              ><a class="pill" href="#xuong-3d"
+                ><span lang="vi">Xem xưởng 3D</span><span lang="en">Explore the 3D workshop</span></a
+              ></article
+            ><article class="chapter-copy" data-copy="2"
+              ><p class="eyebrow"><span lang="vi">Hệ thống phần mềm</span><span lang="en">Software systems</span></p
+              ><h2
+                ><span lang="vi">Dưới<br />lớp vỏ.</span><span lang="en">Under<br />the hood.</span></h2
+              ><p class="deck"
+                ><span lang="vi"
+                  >Từ giao diện đến API và cơ sở dữ liệu, đây là những công cụ mình dùng để ghép các phần của một ứng
+                  dụng lại với nhau.</span
+                ><span lang="en"
+                  >From the interface to APIs and databases, these are the tools I use to put an application
+                  together.</span
+                ></p
+              ><a class="pill" href="#ky-nang"
+                ><span lang="vi">Xem kỹ năng</span><span lang="en">Explore my tools</span></a
+              ></article
+            ></div
+          >
+          <div class="tour-foot inset"
+            ><nav
+              class="rail"
+              aria-label="Chọn chương 3D"
+              data-label-vi="Chọn chương 3D"
+              data-label-en="Choose a 3D chapter"
+              ><a data-jump="0" href="#ho-so" aria-current="step"
+                ><span class="rail-tick" aria-hidden="true"></span><span lang="vi">Toàn cảnh</span
+                ><span lang="en">Overview</span></a
+              ><a data-jump="1" href="#ma-nguon"
+                ><span class="rail-tick" aria-hidden="true"></span><span lang="vi">Mã nguồn</span
+                ><span lang="en">Code</span></a
+              ><a data-jump="2" href="#bo-mach"
+                ><span class="rail-tick" aria-hidden="true"></span><span lang="vi">Bo mạch</span
+                ><span lang="en">Hardware</span></a
+              ></nav
+            ><div class="scene-tools"
+              ><span class="scroll-cue"
+                ><span lang="vi">Cuộn để khám phá</span><span lang="en">Scroll to explore</span> ↓</span
+              ><button
+                class="orbit-open"
+                id="open-orbit"
+                type="button"
+                aria-haspopup="dialog"
+                aria-controls="orbit-dialog"
+                ><span aria-hidden="true">⟳</span> <span lang="vi">Xoay 360°</span
+                ><span lang="en">Rotate 360°</span></button
+              ></div
+            ><span class="tour-progress" aria-hidden="true"></span></div></div
+      ></section>
+      <dialog id="orbit-dialog" aria-labelledby="orbit-title"
+        ><div class="orbit-head"
+          ><h2 id="orbit-title"
+            ><span lang="vi">Xoay góc lập trình</span><span lang="en">Rotate the workstation</span></h2
+          ><button type="button" id="close-orbit"
+            ><span lang="vi">Trở về hành trình</span><span lang="en">Back to the journey</span> ×</button
+          ></div
+        ><figure class="workbench" id="workbench">
+          <div class="desk-frame">
+            <div class="desk-field" id="model-stage" role="group" aria-label="Góc lập trình 3D">
+              <img
+                id="desk-poster"
+                src="/assets/lab/profile.webp"
+                alt=""
+                width="1152"
+                height="720"
+                loading="lazy"
+                draggable="false"
+              />
+              <div class="lab-frames" id="lab-frames" aria-hidden="true" hidden></div>
+            </div>
+            <div class="desk-caption">
+              <span class="desk-title" id="lab-caption"
+                ><span lang="vi">Góc lập trình</span><span lang="en">Developer workstation</span></span
+              >
+              <span class="desk-readout" id="scene-hint"
+                ><span lang="vi">Mô hình 3D</span><span lang="en">3D model</span></span
+              >
+              <button class="lab-retry" id="lab-retry" type="button" hidden
+                ><span lang="vi">Tải lại góc xoay</span><span lang="en">Reload views</span></button
+              >
+            </div>
+          </div>
+          <figcaption class="desk-controls" hidden>
+            <div
+              class="angles"
+              role="group"
+              aria-label="Góc nhìn"
+              data-label-vi="Góc nhìn"
+              data-label-en="Camera view"
+            >
+              <button type="button" data-angle="profile" aria-pressed="true"
+                ><span lang="vi">Toàn cảnh</span><span lang="en">Overview</span></button
+              >
+              <button type="button" data-angle="code" aria-pressed="false"
+                ><span lang="vi">Mã nguồn</span><span lang="en">Code</span></button
+              >
+              <button type="button" data-angle="hardware" aria-pressed="false"
+                ><span lang="vi">Bo mạch</span><span lang="en">Hardware</span></button
+              >
+            </div>
+            <div
+              class="orbit-tools"
+              role="group"
+              aria-label="Xoay mô hình"
+              data-label-vi="Xoay mô hình"
+              data-label-en="Rotate model"
+            >
+              <button
+                type="button"
+                data-turn="-1"
+                aria-label="Xoay trái"
+                data-label-vi="Xoay trái"
+                data-label-en="Rotate left"
+                >←</button
+              >
+              <button
+                type="button"
+                id="orbit-reset"
+                aria-label="Về góc ban đầu"
+                data-label-vi="Về góc ban đầu"
+                data-label-en="Reset orientation"
+                title="Về góc ban đầu"
+                ><span aria-hidden="true">↺</span> <span id="orbit-value">0°</span></button
+              >
+              <button
+                type="button"
+                data-turn="1"
+                aria-label="Xoay phải"
+                data-label-vi="Xoay phải"
+                data-label-en="Rotate right"
+                >→</button
+              >
+            </div>
+          </figcaption>
+          <span class="visually-hidden" id="scene-status" aria-live="polite"></span> </figure></dialog
+      ><script defer src="/assets/it-workbench.js?v=field-4"></script
+      ><section class="exhibit paper-block" id="du-an"
+        ><div class="page-lines" aria-hidden="true"></div
+        ><div class="inset"
+          ><header class="section-title"
+            ><h2><span lang="vi">Dự án chọn lọc.</span><span lang="en">Selected projects.</span></h2></header
+          ><div class="exhibit-grid"
+            ><div class="entry-list"
+              ><details class="entry" data-specimen="workshop" name="selected-projects" open
+                ><summary
+                  ><span class="entry-title">Xưởng của Thức</span
+                  ><span class="entry-kind"
+                    ><span lang="vi">Không gian 3D</span><span lang="en">3D environment</span></span
+                  ><span class="expand-mark" aria-hidden="true"></span></summary
+                ><div class="spec-slot"></div
+                ><div class="entry-body"
+                  ><p
+                    ><span lang="vi"
+                      >Mình dựng một căn nhà 3D có 12 phòng. Chọn Phòng Công Nghệ để xem bàn máy, hoặc lên Sân Thượng
+                      thăm kính thiên văn.</span
+                    ><span lang="en"
+                      >I built this 12-room 3D house. Visit the technology room to see the workstation, or go up to
+                      the rooftop telescope.</span
+                    ></p
+                  ><p class="materials">Three.js · WebGL · TypeScript</p
+                  ><a class="textlink" href="https://thcphm.github.io/xuong-cua-thuc/"
+                    ><span lang="vi">Mở Xưởng gốc</span><span lang="en">Open the original workshop</span></a
+                  ><details class="room-index"
+                    ><summary
+                      ><span lang="vi">Khám phá 12 phòng</span><span lang="en">Explore the 12 rooms</span></summary
+                    ><ul class="tags rooms" lang="vi" aria-label="Các phòng"
+                      ><li><button type="button" data-room-jump="nhac">Phòng Nhạc</button></li
+                      ><li><button type="button" data-room-jump="sach">Phòng Sách</button></li
+                      ><li><button type="button" data-room-jump="cong">Phòng Công Nghệ</button></li
+                      ><li><button type="button" data-room-jump="game">Phòng Giải Trí</button></li
+                      ><li><button type="button" data-room-jump="hoc">Phòng Học</button></li
+                      ><li><button type="button" data-room-jump="garage">Garage AI</button></li
+                      ><li><button type="button" data-room-jump="san">Sân Thượng</button></li
+                      ><li><button type="button" data-room-jump="vuon">Sân Vườn</button></li
+                      ><li><button type="button" data-room-jump="kehoach">Phòng Kế Hoạch</button></li
+                      ><li><button type="button" data-room-jump="bep">Phòng Bếp</button></li
+                      ><li><button type="button" data-room-jump="nghi">Phòng nghỉ</button></li
+                      ><li><button type="button" data-room-jump="ham">Phòng Thực Nghiệm</button></li></ul
+                    ><ul class="tags rooms" lang="en" aria-label="Rooms"
+                      ><li><button type="button" data-room-jump="nhac">Music room</button></li
+                      ><li><button type="button" data-room-jump="sach">Library</button></li
+                      ><li><button type="button" data-room-jump="cong">Technology room</button></li
+                      ><li><button type="button" data-room-jump="game">Game room</button></li
+                      ><li><button type="button" data-room-jump="hoc">Study</button></li
+                      ><li><button type="button" data-room-jump="garage">AI garage</button></li
+                      ><li><button type="button" data-room-jump="san">Rooftop</button></li
+                      ><li><button type="button" data-room-jump="vuon">Garden</button></li
+                      ><li><button type="button" data-room-jump="kehoach">Planning room</button></li
+                      ><li><button type="button" data-room-jump="bep">Kitchen</button></li
+                      ><li><button type="button" data-room-jump="nghi">Rest room</button></li
+                      ><li><button type="button" data-room-jump="ham">Experiment lab</button></li></ul
+                    ></details
+                  ></div
+                ></details
+              ><details class="entry" data-specimen="ecosystem" name="selected-projects"
+                ><summary
+                  ><span class="entry-title">OliveNow</span
+                  ><span class="entry-kind"
+                    ><span lang="vi">Phần mềm vận hành</span><span lang="en">Software systems</span></span
+                  ><span class="expand-mark" aria-hidden="true"></span></summary
+                ><div class="spec-slot"></div
+                ><div class="entry-body"
+                  ><p
+                    ><span lang="vi"
+                      >Mình cộng tác từ xa với đội ngũ ở Ottawa, từ tháng 10/2026, trên bốn sản phẩm cho nhà hàng, bán
+                      lẻ và đặt vé.</span
+                    ><span lang="en"
+                      >I work remotely with the Ottawa team on four restaurant, retail and ticketing products,
+                      starting in October 2026.</span
+                    ></p
+                  ><p class="materials">Web · Desktop · SQL</p
+                  ><a class="textlink" href="/solutions/du-an/#olivenow"
+                    ><span lang="vi">Xem bốn sản phẩm</span><span lang="en">View the four products</span></a
+                  ><details class="source-shot"
+                    ><summary
+                      ><span lang="vi">Ảnh dự án thật</span><span lang="en">Original project image</span></summary
+                    ><img
+                      src="/img/olivenow.webp"
+                      alt="Website thật của OliveNow"
+                      data-alt-vi="Website thật của OliveNow"
+                      data-alt-en="The OliveNow website"
+                      loading="lazy" /></details></div></details
+              ><details class="entry" data-specimen="island" name="selected-projects"
+                ><summary
+                  ><span class="entry-title">Serene Isle</span
+                  ><span class="entry-kind"><span lang="vi">Game độc lập</span><span lang="en">Indie game</span></span
+                  ><span class="expand-mark" aria-hidden="true"></span></summary
+                ><div class="spec-slot"></div
+                ><div class="entry-body"
+                  ><p
+                    ><span lang="vi"
+                      >Một hòn đảo nhỏ để nghỉ ngơi ngay trên trình duyệt. Mình đang xây dựng phiên bản Unity với đồ
+                      họa mới.</span
+                    ><span lang="en"
+                      >A quiet island you can visit in your browser. I’m building a Unity edition with new
+                      artwork.</span
+                    ></p
+                  ><p class="materials">Web · Game design · Unity</p
+                  ><a class="textlink" href="/studio/#serene-isle"
+                    ><span lang="vi">Khám phá hòn đảo</span><span lang="en">Explore the island</span></a
+                  ><details class="source-shot"
+                    ><summary
+                      ><span lang="vi">Ảnh dự án thật</span><span lang="en">Original project image</span></summary
+                    ><img
+                      src="/img/serene.webp"
+                      alt="Ảnh trong game Serene Isle"
+                      data-alt-vi="Ảnh trong game Serene Isle"
+                      data-alt-en="An in-game view of Serene Isle"
+                      loading="lazy" /></details></div></details></div
+            ><div class="specimens"
+              ><figure class="spec-plate workshop-viewer" data-figure="workshop" id="xuong-3d">
+                <div class="workshop-panel" id="workshop-panel">
+                  <div class="workshop-bar" data-workshop-tools hidden>
+                    <div
+                      class="workshop-modes"
+                      role="group"
+                      aria-label="Cách xem Xưởng của Thức"
+                      data-label-vi="Cách xem Xưởng của Thức"
+                      data-label-en="Workshop display"
+                    >
+                      <button type="button" data-workshop-mode="model" aria-pressed="true"
+                        ><span lang="vi">Mô hình 3D</span><span lang="en">3D model</span></button
+                      >
+                      <button type="button" data-workshop-mode="photo" aria-pressed="false"
+                        ><span lang="vi">Ảnh trang gốc</span><span lang="en">Original site image</span></button
+                      >
+                    </div>
+                    <button
+                      type="button"
+                      data-workshop-expand
+                      aria-haspopup="dialog"
+                      aria-expanded="false"
+                      aria-controls="workshop-dialog"
+                      ><span lang="vi">Mở rộng</span><span lang="en">Enlarge</span></button
+                    >
+                  </div>
+                  <div
+                    class="workshop-stage"
+                    data-workshop-stage
+                    role="group"
+                    aria-label="Xưởng của Thức, mô hình 3D gốc với 12 phòng và biển hiệu TP"
+                    data-label-vi="Xưởng của Thức, mô hình 3D gốc với 12 phòng và biển hiệu TP"
+                    data-label-en="Thức’s original 3D workshop, with 12 rooms and the TP sign"
+                  >
+                    <img
+                      data-workshop-poster
+                      src="/assets/workshop/overview.webp"
+                      width="1280"
+                      height="800"
+                      loading="lazy"
+                      decoding="async"
+                      draggable="false"
+                      alt="Căn xưởng xanh đậm với biển TP phát sáng, robot ở sảnh và các phòng bố trí quanh sảnh."
+                      data-alt-vi="Căn xưởng xanh đậm với biển TP phát sáng, robot ở sảnh và các phòng bố trí quanh sảnh."
+                      data-alt-en="The dark blue workshop with its glowing TP sign, lobby robot and surrounding rooms."
+                    />
+                    <div data-workshop-film class="workshop-film" aria-hidden="true" hidden></div>
+                    <div data-workshop-host class="workshop-host" aria-hidden="true"></div>
+                    <div
+                      data-workshop-labels
+                      class="workshop-labels"
+                      aria-label="Phòng trong xưởng"
+                      data-label-vi="Phòng trong xưởng"
+                      data-label-en="Rooms in the workshop"
+                      role="group"
+                    ></div>
+                    <div data-workshop-photo class="workshop-photo" hidden></div>
+                    <button type="button" class="workshop-home" data-workshop-home hidden
+                      ><span lang="vi">Về toàn cảnh</span><span lang="en">Back to overview</span></button>
+                  </div>
+                  <div class="workshop-ctrl" data-workshop-tools hidden>
+                    <label class="workshop-rooms" for="workshop-room"
+                      ><span lang="vi">Chọn phòng</span><span lang="en">Choose a room</span
+                      ><select id="workshop-room"
+                        ><option value="" data-vi="Toàn cảnh" data-en="Overview">Toàn cảnh</option
+                        ><option value="nhac" data-vi="Phòng Nhạc" data-en="Music room">Phòng Nhạc</option
+                        ><option value="sach" data-vi="Phòng Sách" data-en="Library">Phòng Sách</option
+                        ><option value="cong" data-vi="Phòng Công Nghệ" data-en="Technology room"
+                          >Phòng Công Nghệ</option
+                        ><option value="game" data-vi="Phòng Giải Trí" data-en="Game room">Phòng Giải Trí</option
+                        ><option value="hoc" data-vi="Phòng Học" data-en="Study">Phòng Học</option
+                        ><option value="garage" data-vi="Garage AI" data-en="AI garage">Garage AI</option
+                        ><option value="san" data-vi="Sân Thượng" data-en="Rooftop">Sân Thượng</option
+                        ><option value="vuon" data-vi="Sân Vườn" data-en="Garden">Sân Vườn</option
+                        ><option value="kehoach" data-vi="Phòng Kế Hoạch" data-en="Planning room"
+                          >Phòng Kế Hoạch</option
+                        ><option value="bep" data-vi="Phòng Bếp" data-en="Kitchen">Phòng Bếp</option
+                        ><option value="nghi" data-vi="Phòng nghỉ" data-en="Rest room">Phòng nghỉ</option
+                        ><option value="ham" data-vi="Phòng Thực Nghiệm" data-en="Experiment lab"
+                          >Phòng Thực Nghiệm</option
+                        ></select
+                      ></label
+                    >
+                    <div class="workshop-zoom" role="group" aria-label="Độ phóng đại" data-label-vi="Độ phóng đại" data-label-en="Magnification">
+                      <button type="button" data-workshop-zoom="-1" aria-label="Thu nhỏ mô hình" data-label-vi="Thu nhỏ mô hình" data-label-en="Zoom out">−</button>
+                      <span data-workshop-magnification>100%</span>
+                      <button type="button" data-workshop-zoom="1" aria-label="Phóng to mô hình" data-label-vi="Phóng to mô hình" data-label-en="Zoom in">+</button>
+                    </div>
+                    <div
+                      class="workshop-turn"
+                      role="group"
+                      aria-label="Xoay xưởng"
+                      data-label-vi="Xoay xưởng"
+                      data-label-en="Rotate workshop"
+                    >
+                      <button
+                        type="button"
+                        data-workshop-turn="-1"
+                        aria-label="Xoay xưởng sang trái"
+                        data-label-vi="Xoay xưởng sang trái"
+                        data-label-en="Rotate workshop left"
+                        ><span aria-hidden="true">↶</span></button
+                      >
+                      <button
+                        type="button"
+                        data-workshop-reset
+                        aria-label="Về góc ban đầu của cảnh đang xem"
+                        data-label-vi="Về góc ban đầu của cảnh đang xem"
+                        data-label-en="Reset the current view"
+                        ><span data-workshop-degrees>0°</span></button
+                      >
+                      <button
+                        type="button"
+                        data-workshop-turn="1"
+                        aria-label="Xoay xưởng sang phải"
+                        data-label-vi="Xoay xưởng sang phải"
+                        data-label-en="Rotate workshop right"
+                        ><span aria-hidden="true">↷</span></button
+                      >
+                    </div>
+                  </div>
+                  <p class="workshop-hint" data-workshop-help hidden></p>
+                  <p class="visually-hidden" data-workshop-status aria-live="polite" aria-atomic="true"></p>
+                </div>
+                <figcaption
+                  ><i aria-hidden="true">+</i
+                  ><span
+                    >Xưởng của Thức · <span lang="vi">Mô hình từ dự án gốc</span
+                    ><span lang="en">Model from the original project</span></span
+                  ></figcaption
+                >
+              </figure>
+              <figure class="spec-plate" data-figure="ecosystem" hidden
+                ><div class="spec-object"
+                  ><img
+                    src="/assets/field/ecosystem.webp"
+                    loading="lazy"
+                    alt="Mô hình máy tính có bốn mô-đun"
+                    data-alt-vi="Mô hình máy tính có bốn mô-đun"
+                    data-alt-en="Four-module computing system" /><img
+                    class="mesh-pass"
+                    src="/assets/field/ecosystem-edges.webp"
+                    loading="lazy"
+                    alt=""
+                    aria-hidden="true" /></div
+                ><figcaption
+                  ><i aria-hidden="true">+</i
+                  ><span
+                    >OliveNow · <span lang="vi">Mô hình 3D</span><span lang="en">3D study</span></span
+                  ></figcaption
+                ></figure
+              ><figure class="spec-plate" data-figure="island" hidden
+                ><div class="spec-object"
+                  ><img
+                    src="/assets/field/island.webp"
+                    loading="lazy"
+                    alt="Mô hình hòn đảo nhỏ có biển và cây"
+                    data-alt-vi="Mô hình hòn đảo nhỏ có biển và cây"
+                    data-alt-en="Cutaway model of a small wooded island" /><img
+                    class="mesh-pass"
+                    src="/assets/field/island-edges.webp"
+                    loading="lazy"
+                    alt=""
+                    aria-hidden="true" /></div
+                ><figcaption
+                  ><i aria-hidden="true">+</i
+                  ><span
+                    >Serene Isle · <span lang="vi">Mô hình 3D</span><span lang="en">3D study</span></span
+                  ></figcaption
+                ></figure
+              ></div
+            ></div
+          ></div
+        ></section
+      ><dialog
+        id="workshop-dialog"
+        aria-label="Xưởng của Thức"
+        data-label-vi="Xưởng của Thức, chế độ xem rộng"
+        data-label-en="Thức’s workshop, enlarged view"
+        ><div data-workshop-slot></div></dialog
+      ><section class="interlude scene-band" id="tps"
+        ><picture class="cover-image"
+          ><source media="(max-width:640px)" srcset="/assets/field/after-hours-small.webp" /><img
+            src="/assets/field/after-hours.webp"
+            alt=""
+            loading="lazy" /></picture
+        ><div class="page-lines" aria-hidden="true"></div
+        ><div class="inset inter-type"
+          ><p class="eyebrow">Thuc Pham Solutions</p
+          ><h2
+            ><span lang="vi">Phần mềm<br />ngoài đời.</span><span lang="en">Software in<br />the wild.</span></h2
+          ><p class="deck"
+            ><span lang="vi"
+              >Website đa ngôn ngữ, ứng dụng desktop và hệ thống đặt vé. Mỗi dự án bắt đầu từ cách một đội ngũ làm
+              việc hằng ngày.</span
+            ><span lang="en"
+              >Multilingual websites, desktop apps and ticketing systems. Each project starts with how a team works
+              day to day.</span
+            ></p
+          ><a class="pill" href="/solutions/du-an/"
+            ><span lang="vi">Xem hồ sơ dự án</span><span lang="en">Browse project files</span></a
+          ></div
+        ></section
+      ><section class="paper-block dossier" id="ky-nang"
+        ><div class="page-lines" aria-hidden="true"></div
+        ><div class="inset split-layout"
+          ><div class="section-title"
+            ><p class="eyebrow">Phạm Trí Thức</p
+            ><h2
+              ><span lang="vi">Hồ sơ<br />kỹ thuật.</span><span lang="en">Technical<br />profile.</span></h2
+            ><p class="intro"
+              ><span lang="vi"
+                >Mình đang học để trở thành lập trình viên full-stack. Ngoài giờ viết phần mềm, mình làm game độc lập
+                dưới tên Thuc Pham Studio.</span
+              ><span lang="en"
+                >I’m studying to become a full-stack developer. Outside of software work, I make independent games as
+                Thuc Pham Studio.</span
+              ></p
+            ><div class="action-row"
+              ><a
+                class="pill"
+                id="download-cv"
+                data-cv-link
+                href="/assets/cv-vi.pdf"
+                download="Pham-Tri-Thuc-CV-VI.pdf"
+                ><span lang="vi">Tải CV PDF</span><span lang="en">Download CV PDF</span></a
+              ><button type="button" class="textlink" data-print
+                ><span lang="vi">In hồ sơ</span><span lang="en">Print profile</span></button
+              ></div
+            ><a class="textlink" href="/studio/"
+              ><span lang="vi">Ghé Thuc Pham Studio</span><span lang="en">Visit Thuc Pham Studio</span></a
+            ></div
+          ><div class="ledger"
+            ><details class="skill-row"
+              ><summary
+                ><span><span lang="vi">Ngôn ngữ</span><span lang="en">Languages</span></span
+                ><span class="expand-mark" aria-hidden="true"></span></summary
+              ><ul class="tags"
+                ><li>TypeScript</li
+                ><li>JavaScript</li
+                ><li>C#</li
+                ><li>PHP</li
+                ><li>Python</li
+                ><li>C</li
+                ><li>SQL</li></ul
+              ></details
+            ><details class="skill-row"
+              ><summary
+                ><span><span>Front-end</span></span
+                ><span class="expand-mark" aria-hidden="true"></span></summary
+              ><ul class="tags"
+                ><li>React</li
+                ><li>Next.js</li
+                ><li>Tailwind CSS</li
+                ><li>HTML5</li
+                ><li>CSS3</li
+                ><li>Responsive</li
+                ><li lang="vi">Đa ngôn ngữ (i18n)</li
+                ><li lang="en">Internationalisation (i18n)</li></ul
+              ></details
+            ><details class="skill-row"
+              ><summary
+                ><span><span lang="vi">Back-end và API</span><span lang="en">Back-end and APIs</span></span
+                ><span class="expand-mark" aria-hidden="true"></span></summary
+              ><ul class="tags"
+                ><li>Node.js</li
+                ><li>Express</li
+                ><li>.NET</li
+                ><li>REST API</li
+                ><li lang="vi">Xác thực JWT</li
+                ><li lang="en">JWT auth</li
+                ><li>Socket.IO</li
+                ><li>WebSocket</li></ul
+              ></details
+            ><details class="skill-row"
+              ><summary
+                ><span><span lang="vi">Cơ sở dữ liệu</span><span lang="en">Databases</span></span
+                ><span class="expand-mark" aria-hidden="true"></span></summary
+              ><ul class="tags"
+                ><li>MySQL</li
+                ><li>SQL Server</li
+                ><li>SQLite</li
+                ><li>Firebase</li
+                ><li lang="vi">Excel nhập dữ liệu</li
+                ><li lang="en">Excel data import</li></ul
+              ></details
+            ><details class="skill-row"
+              ><summary
+                ><span><span lang="vi">3D, game và desktop</span><span lang="en">3D, games and desktop</span></span
+                ><span class="expand-mark" aria-hidden="true"></span></summary
+              ><ul class="tags"
+                ><li>Three.js</li
+                ><li>WebGL</li
+                ><li>Unity</li
+                ><li>Electron</li
+                ><li lang="vi">Ứng dụng desktop Windows</li
+                ><li lang="en">Windows desktop apps</li></ul
+              ></details
+            ><details class="skill-row"
+              ><summary
+                ><span
+                  ><span lang="vi">Hạ tầng và triển khai</span
+                  ><span lang="en">Infrastructure and deployment</span></span
+                ><span class="expand-mark" aria-hidden="true"></span></summary
+              ><ul class="tags"
+                ><li>Docker</li
+                ><li lang="vi">CI/CD GitHub Actions</li
+                ><li lang="en">CI/CD with GitHub Actions</li
+                ><li>Linux</li
+                ><li>Git</li
+                ><li lang="vi">Domain và DNS</li
+                ><li lang="en">Domains and DNS</li
+                ><li>SSL/HTTPS</li
+                ><li>GitHub Pages</li
+                ><li>SiteGround</li></ul
+              ></details
+            ><details class="skill-row"
+              ><summary
+                ><span><span lang="vi">Kiểm thử và quy trình</span><span lang="en">Testing and process</span></span
+                ><span class="expand-mark" aria-hidden="true"></span></summary
+              ><ul class="tags"
+                ><li>Jest</li
+                ><li>Unit test</li
+                ><li>Postman</li
+                ><li>Agile/Scrum</li
+                ><li>Jira</li
+                ><li>Trello</li
+                ><li lang="vi">Viết tài liệu yêu cầu</li
+                ><li lang="en">Requirement docs</li></ul
+              ></details
+            ><details class="skill-row"
+              ><summary
+                ><span><span lang="vi">Thiết kế và phần cứng</span><span lang="en">Design and hardware</span></span
+                ><span class="expand-mark" aria-hidden="true"></span></summary
+              ><ul class="tags"
+                ><li>Figma</li
+                ><li>UI/UX</li
+                ><li>Prototype</li
+                ><li>Pixel art</li
+                ><li lang="vi">Máy quét mã vạch</li
+                ><li lang="en">Barcode scanners</li
+                ><li lang="vi">Máy in hoá đơn</li
+                ><li lang="en">Receipt printers</li></ul
+              ></details
+            ><details class="skill-row code-detail"
+              ><summary
+                ><span><span lang="vi">Mã định danh website</span><span lang="en">Website identifier</span></span
+                ><span class="expand-mark" aria-hidden="true"></span></summary
+              ><div class="scan" id="scan">
+                <svg
+                  class="barcode"
+                  viewBox="0 0 231 60"
+                  preserveAspectRatio="none"
+                  shape-rendering="crispEdges"
+                  role="img"
+                  aria-labelledby="bc-title"
+                >
+                  <title id="bc-title">Code 128 · thcphm.github.io</title>
+                  <g fill="currentColor">
+                    <rect x="10" width="2" height="60"></rect>
+                    <rect x="13" width="1" height="60"></rect>
+                    <rect x="16" width="1" height="60"></rect>
+                    <rect x="21" width="1" height="60"></rect>
+                    <rect x="24" width="4" height="60"></rect>
+                    <rect x="29" width="1" height="60"></rect>
+                    <rect x="32" width="1" height="60"></rect>
+                    <rect x="35" width="2" height="60"></rect>
+                    <rect x="41" width="1" height="60"></rect>
+                    <rect x="43" width="1" height="60"></rect>
+                    <rect x="48" width="1" height="60"></rect>
+                    <rect x="50" width="2" height="60"></rect>
+                    <rect x="54" width="1" height="60"></rect>
+                    <rect x="56" width="1" height="60"></rect>
+                    <rect x="59" width="4" height="60"></rect>
+                    <rect x="65" width="1" height="60"></rect>
+                    <rect x="68" width="2" height="60"></rect>
+                    <rect x="74" width="1" height="60"></rect>
+                    <rect x="76" width="4" height="60"></rect>
+                    <rect x="81" width="3" height="60"></rect>
+                    <rect x="85" width="1" height="60"></rect>
+                    <rect x="87" width="1" height="60"></rect>
+                    <rect x="90" width="2" height="60"></rect>
+                    <rect x="94" width="3" height="60"></rect>
+                    <rect x="98" width="1" height="60"></rect>
+                    <rect x="101" width="2" height="60"></rect>
+                    <rect x="104" width="1" height="60"></rect>
+                    <rect x="109" width="1" height="60"></rect>
+                    <rect x="114" width="2" height="60"></rect>
+                    <rect x="117" width="1" height="60"></rect>
+                    <rect x="120" width="1" height="60"></rect>
+                    <rect x="123" width="4" height="60"></rect>
+                    <rect x="128" width="1" height="60"></rect>
+                    <rect x="131" width="1" height="60"></rect>
+                    <rect x="134" width="2" height="60"></rect>
+                    <rect x="140" width="1" height="60"></rect>
+                    <rect x="142" width="1" height="60"></rect>
+                    <rect x="145" width="4" height="60"></rect>
+                    <rect x="151" width="1" height="60"></rect>
+                    <rect x="153" width="1" height="60"></rect>
+                    <rect x="156" width="1" height="60"></rect>
+                    <rect x="161" width="2" height="60"></rect>
+                    <rect x="164" width="1" height="60"></rect>
+                    <rect x="167" width="2" height="60"></rect>
+                    <rect x="171" width="3" height="60"></rect>
+                    <rect x="175" width="1" height="60"></rect>
+                    <rect x="180" width="2" height="60"></rect>
+                    <rect x="183" width="1" height="60"></rect>
+                    <rect x="186" width="1" height="60"></rect>
+                    <rect x="190" width="4" height="60"></rect>
+                    <rect x="195" width="1" height="60"></rect>
+                    <rect x="197" width="4" height="60"></rect>
+                    <rect x="202" width="1" height="60"></rect>
+                    <rect x="204" width="3" height="60"></rect>
+                    <rect x="208" width="2" height="60"></rect>
+                    <rect x="213" width="3" height="60"></rect>
+                    <rect x="217" width="1" height="60"></rect>
+                    <rect x="219" width="2" height="60"></rect>
+                  </g>
+                </svg>
+                <span class="beam" aria-hidden="true"></span> </div
+              ><p class="readout is-ok" id="readout" aria-live="polite">
+                <span class="led" aria-hidden="true"></span>
+                <span class="readout-text"
+                  ><span lang="vi">Đã đọc: thcphm.github.io</span><span lang="en">Read: thcphm.github.io</span></span
+                >
+                <button class="rescan" type="button" id="rescan"
+                  ><span lang="vi">Quét lại</span><span lang="en">Scan again</span></button
+                >
+              </p></details
+            ></div
+          ></div
+        ></section
+      ></main
+    ><footer class="closing scene-band" id="lien-he"
+      ><div class="closing-photo" aria-hidden="true"></div><div class="page-lines" aria-hidden="true"></div>
+      <div class="closing-inner inset"
+        ><p class="eyebrow"><span lang="vi">Liên hệ</span><span lang="en">Contact</span></p
+        ><h2>Thức.</h2>
+        <a class="mail" href="mailto:phamthuc45@outlook.com">phamthuc45@outlook.com</a>
+        <div class="end-line"
+          ><span>© <span data-year>2026</span> Phạm Trí Thức</span
+          ><div
+            ><a href="https://github.com/thcphm">GitHub</a
+            ><a href="https://www.facebook.com/thuc.pham.0405/">Facebook</a
+            ><a href="#top"><span lang="vi">Đầu trang</span><span lang="en">Back to top</span></a></div
+          ></div
+        ></div
+      ></footer
+    ></body
+  ></html
+>

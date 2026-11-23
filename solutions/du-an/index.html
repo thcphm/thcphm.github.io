@@ -1,0 +1,481 @@
+<!doctype html>
+<html
+  lang="vi"
+  data-theme="light"
+  data-title-vi="Hồ sơ dự án · Phạm Trí Thức"
+  data-title-en="Project files · Phạm Trí Thức"
+  data-desc-vi="Vai trò, công nghệ và sản phẩm trong các dự án OliveNow và Nail Salon Manager."
+  data-desc-en="Roles, technologies and products across OliveNow and Nail Salon Manager."
+>
+  <head
+    ><meta charset="utf-8" /><meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover" /><meta
+      name="theme-color"
+      content="#14241d" />
+    <title>Hồ sơ dự án · Phạm Trí Thức</title
+    ><meta
+      name="description"
+      content="Vai trò, công nghệ và sản phẩm trong các dự án OliveNow và Nail Salon Manager." /><script>
+      document.documentElement.classList.add("js");
+      try {
+        if (localStorage.getItem("tp-lang") === "en") document.documentElement.lang = "en";
+        if (localStorage.getItem("tp-theme") === "dark") document.documentElement.dataset.theme = "dark";
+      } catch (e) {}
+    </script>
+    <link rel="icon" href="/assets/field/tp-mark.svg" /><link rel="stylesheet" href="/assets/field-guide.css?v=tp" />
+    <script defer src="/script.js?v=field-4"></script
+    ><script defer src="/assets/field-guide.js"></script
+  ></head>
+  <body id="top" class="page-projects"
+    ><a class="skip" href="#content"><span lang="vi">Đến nội dung</span><span lang="en">Skip to content</span></a>
+    <header class="mast"
+      ><a
+        class="identity"
+        href="/"
+        aria-label="Phạm Trí Thức · Trang chủ"
+        data-label-vi="Phạm Trí Thức · Trang chủ"
+        data-label-en="Phạm Trí Thức · Home"
+        ><svg class="brand-mark" viewBox="-2 -2 112 104" aria-hidden="true" focusable="false">
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M0 0H78A30 30 0 0 1 78 60H62V100H48V14H34V100H20V14H0Z M62 14V46H76A16 16 0 0 0 76 14Z"
+          /></svg
+        ><span>thcphm<span class="brand-dot">.</span></span></a
+      >
+      <nav
+        id="site-nav"
+        aria-label="Điều hướng chính"
+        data-label-vi="Điều hướng chính"
+        data-label-en="Main navigation"
+        ><a href="/"><span lang="vi">Hành trình</span><span lang="en">Journey</span></a
+        ><a href="/#du-an"><span lang="vi">Dự án</span><span lang="en">Projects</span></a
+        ><a href="/solutions/">Solutions</a><a href="/studio/">Studio</a></nav
+      ><div class="mast-tools"
+        ><button
+          id="lang-toggle"
+          type="button"
+          aria-label="Switch to English"
+          data-label-vi="Switch to English"
+          data-label-en="Đổi sang tiếng Việt"
+          ><span lang="vi">EN</span><span lang="en">VI</span></button
+        ><button
+          id="theme-toggle"
+          type="button"
+          aria-label="Đổi giao diện sáng tối"
+          data-label-vi="Đổi giao diện sáng tối"
+          data-label-en="Change colour theme"
+          aria-pressed="false"
+          ><span class="theme-disc" aria-hidden="true"></span></button
+        ><button
+          id="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Mở trình đơn"
+          data-label-vi="Mở trình đơn"
+          data-label-en="Open menu"
+          ><span aria-hidden="true">☰</span></button
+        ></div
+      ></header
+    >
+    <main id="content"
+      ><section class="cover scene-band catalog-cover"
+        ><picture class="cover-image"><img src="/assets/field/hardware.webp" alt="" fetchpriority="high" /></picture
+        ><div class="page-lines" aria-hidden="true"></div
+        ><div class="cover-type inset"
+          ><p class="eyebrow"><span lang="vi">Thuc Pham Solutions</span><span lang="en">Thuc Pham Solutions</span></p
+          ><h1
+            ><span lang="vi">Hồ sơ<br />dự án.</span><span lang="en">Project<br />files.</span></h1
+          ><p class="deck"
+            ><span lang="vi">Các sản phẩm mình đã thiết kế, phát triển hoặc triển khai cho khách hàng.</span
+            ><span lang="en">Products I’ve designed, built or deployed for clients.</span></p
+          ><a class="pill" href="#danh-muc"
+            ><span lang="vi">Tra cứu dự án</span><span lang="en">Browse the catalogue</span></a
+          ></div
+        ></section
+      ><section class="paper-block" id="danh-muc"
+        ><div class="page-lines" aria-hidden="true"></div
+        ><div class="inset"
+          ><div class="section-title"
+            ><p class="eyebrow"><span lang="vi">Danh mục</span><span lang="en">Catalogue</span></p
+            ><h2><span lang="vi">Dự án đã làm.</span><span lang="en">Client projects.</span></h2></div
+          ><div class="proj-page">
+            <div class="proj-toolbar" role="search">
+              <label class="visually-hidden" for="proj-search"
+                ><span lang="vi">Tìm dự án</span><span lang="en">Search projects</span></label
+              >
+              <input
+                id="proj-search"
+                type="search"
+                autocomplete="off"
+                placeholder="Tìm theo tên, nền tảng, mô tả…"
+                data-ph-vi="Tìm theo tên, nền tảng, mô tả…"
+                data-ph-en="Search by name, platform, description…"
+              />
+              <div
+                class="chips"
+                role="group"
+                aria-label="Lọc theo loại"
+                data-label-vi="Lọc theo loại"
+                data-label-en="Filter by type"
+              >
+                <button type="button" class="chip-btn" data-filter="all" aria-pressed="true"
+                  ><span lang="vi">Tất cả</span><span lang="en">All</span></button
+                >
+                <button type="button" class="chip-btn" data-filter="web" aria-pressed="false">Website</button>
+                <button type="button" class="chip-btn" data-filter="app" aria-pressed="false"
+                  ><span lang="vi">Ứng dụng</span><span lang="en">Apps</span></button
+                >
+                <button type="button" class="chip-btn" data-filter="desktop" aria-pressed="false">Desktop</button>
+              </div>
+              <p class="proj-count" id="proj-count" aria-live="polite"></p>
+            </div>
+
+            <details id="olivenow" class="eco group" open>
+              <summary class="eco-head">
+                <span>
+                  <span class="eco-title">OliveNow</span>
+                  <span class="eco-sub" lang="vi"
+                    >Hệ sinh thái phần mềm cho nhà hàng và cửa hàng của một công ty ở Ottawa, Ontario, Canada. Mình
+                    làm freelance, từ xa.</span
+                  >
+                  <span class="eco-sub" lang="en"
+                    >A software ecosystem for restaurants and shops, from a company in Ottawa, Ontario, Canada.
+                    Freelance, remote.</span
+                  >
+                </span>
+                <span class="eco-meta"
+                  ><span lang="vi">10/2026 – nay</span><span lang="en">Oct 2026 – now</span><br /><span class="eco-n"
+                    >4</span
+                  >
+                  <span lang="vi">sản phẩm</span><span lang="en">products</span></span
+                >
+              </summary>
+              <ul class="tree">
+                <li class="node has-shot" id="olivepos-website" data-tags="web">
+                  <details class="case-record"
+                    ><summary
+                      ><span class="case-name">OlivePOS Website</span>
+                      <span class="node-kind"><span lang="vi">Website</span><span lang="en">Website</span></span>
+                      <span class="live"><span lang="vi">Đang chạy</span><span lang="en">Live</span></span>
+                      <span class="expand-mark" aria-hidden="true"></span></summary
+                    ><a
+                      class="node-shot"
+                      href="https://olivenow.com/olivepos.html"
+                      rel="noopener"
+                      tabindex="-1"
+                      aria-hidden="true"
+                      ><img src="/img/olivepos.webp" alt="" width="960" height="606" loading="lazy" decoding="async"
+                    /></a>
+                    <div class="node-body">
+                      <p lang="vi"
+                        >Trang giới thiệu OlivePOS 5 ngôn ngữ (Anh, Việt, Pháp, Tây Ban Nha, Trung): tính năng, phần
+                        cứng, bảng giá, câu hỏi thường gặp và form đăng ký dùng thử. Có “Cẩm nang tư vấn cho nhà
+                        hàng”.</p
+                      >
+                      <p lang="en"
+                        >The OlivePOS site in 5 languages (English, Vietnamese, French, Spanish, Chinese): features,
+                        hardware, pricing, FAQ and a free-trial form, plus an advisory guide for restaurants.</p
+                      >
+                      <dl class="node-spec">
+                        <div
+                          ><dt lang="vi">Vai trò</dt><dt lang="en">Role</dt
+                          ><dd
+                            ><span lang="vi">Thiết kế, front-end</span><span lang="en">Design, front-end</span></dd
+                          ></div
+                        >
+                        <div><dt lang="vi">Nền tảng</dt><dt lang="en">Platform</dt><dd>Web, SiteGround</dd></div>
+                        <div><dt lang="vi">Năm</dt><dt lang="en">Year</dt><dd>2026</dd></div>
+                      </dl>
+                      <ul
+                        class="stack-tags"
+                        aria-label="Công nghệ"
+                        data-label-vi="Công nghệ"
+                        data-label-en="Tech stack"
+                        ><li>HTML</li
+                        ><li>CSS</li
+                        ><li>JavaScript</li
+                        ><li>PHP</li
+                        ><li lang="vi">i18n (5 ngôn ngữ)</li
+                        ><li lang="en">i18n (5 languages)</li
+                        ><li>SiteGround</li></ul
+                      >
+                      <p class="node-links"
+                        ><a href="https://olivenow.com/olivepos.html" rel="noopener"
+                          ><span lang="vi">Xem trang thật</span><span lang="en">View live site</span></a
+                        ></p
+                      >
+                    </div>
+                  </details></li
+                >
+                <li class="node" id="olivepos-app" data-tags="app desktop">
+                  <details class="case-record"
+                    ><summary
+                      ><span class="case-name">OlivePOS App</span>
+                      <span class="node-kind"><span lang="vi">Ứng dụng</span><span lang="en">App</span></span>
+                      <span class="live"><span lang="vi">Đang chạy</span><span lang="en">Live</span></span>
+                      <span class="expand-mark" aria-hidden="true"></span></summary
+                    ><div class="node-body">
+                      <p lang="vi"
+                        >Ứng dụng POS cho nhà hàng: tính tiền, in phiếu bếp, nhận đơn online và gọi món bằng QR tại
+                        bàn. Có bản Android và Windows.</p
+                      >
+                      <p lang="en"
+                        >Restaurant POS: billing, kitchen tickets, online orders and QR ordering at the table.
+                        Available for Android and Windows.</p
+                      >
+                      <dl class="node-spec">
+                        <div
+                          ><dt lang="vi">Vai trò</dt><dt lang="en">Role</dt
+                          ><dd
+                            ><span lang="vi">Làm toàn bộ: thiết kế, front-end, back-end, triển khai</span
+                            ><span lang="en">Full build: design, front-end, back-end, deployment</span></dd
+                          ></div
+                        >
+                        <div><dt lang="vi">Nền tảng</dt><dt lang="en">Platform</dt><dd>Android, Windows</dd></div>
+                        <div><dt lang="vi">Năm</dt><dt lang="en">Year</dt><dd>2026</dd></div>
+                      </dl>
+                      <ul
+                        class="stack-tags"
+                        aria-label="Công nghệ"
+                        data-label-vi="Công nghệ"
+                        data-label-en="Tech stack"
+                        ><li>C# / .NET</li
+                        ><li>Node.js</li
+                        ><li>Express</li
+                        ><li>Socket.IO</li
+                        ><li>SQLite</li
+                        ><li>SQL Server</li></ul
+                      >
+                      <p class="node-links"
+                        ><a href="https://order.olivepos.com/download" rel="noopener"
+                          ><span lang="vi">Trang tải app</span><span lang="en">Download page</span></a
+                        ></p
+                      >
+                    </div>
+                  </details></li
+                >
+                <li class="node" id="oliveretail-app" data-tags="app desktop">
+                  <details class="case-record"
+                    ><summary
+                      ><span class="case-name">OliveRetail App</span>
+                      <span class="node-kind"><span lang="vi">Ứng dụng</span><span lang="en">App</span></span>
+                      <span class="internal"
+                        ><span lang="vi">Phần mềm nội bộ của khách</span
+                        ><span lang="en">Client-internal software</span></span
+                      >
+                      <span class="expand-mark" aria-hidden="true"></span></summary
+                    ><div class="node-body">
+                      <p lang="vi"
+                        >Ứng dụng bán hàng cho tạp hoá: quét mã vạch để thêm hàng (giá, danh mục, thuế), quét lại để
+                        bán và hiện tổng đơn. Chạy được trên máy cấu hình thấp mà cửa hàng nhỏ vẫn đang dùng.</p
+                      >
+                      <p lang="en"
+                        >Grocery point-of-sale: scan a barcode to add an item (price, category, tax), scan again to
+                        sell and see the total. Runs on the low-spec PCs small shops still use.</p
+                      >
+                      <dl class="node-spec">
+                        <div
+                          ><dt lang="vi">Vai trò</dt><dt lang="en">Role</dt
+                          ><dd
+                            ><span lang="vi">Làm toàn bộ: thiết kế, lập trình, triển khai</span
+                            ><span lang="en">Full build: design, development, deployment</span></dd
+                          ></div
+                        >
+                        <div><dt lang="vi">Nền tảng</dt><dt lang="en">Platform</dt><dd>Windows 7</dd></div>
+                        <div><dt lang="vi">Năm</dt><dt lang="en">Year</dt><dd>2026</dd></div>
+                      </dl>
+                      <ul
+                        class="stack-tags"
+                        aria-label="Công nghệ"
+                        data-label-vi="Công nghệ"
+                        data-label-en="Tech stack"
+                        ><li>Python</li
+                        ><li>SQLite</li
+                        ><li lang="vi">Máy quét mã vạch</li
+                        ><li lang="en">Barcode scanner</li
+                        ><li>Windows 7</li></ul
+                      >
+
+                      <details class="project-sample">
+                        <summary
+                          ><span class="when-closed"
+                            ><span lang="vi">Quét thử một món</span><span lang="en">Try scanning an item</span></span
+                          ><span class="when-open"
+                            ><span lang="vi">Đặt lại hóa đơn</span><span lang="en">Reset the receipt</span></span
+                          ></summary
+                        >
+                        <p lang="vi">Hóa đơn mô phỏng · 1 sổ tay × 18.000 đ. <strong>Tổng 18.000 đ</strong></p>
+                        <p lang="en">Sample receipt · 1 notebook × ₫18,000. <strong>Total ₫18,000</strong></p>
+                      </details>
+                    </div>
+                  </details></li
+                >
+                <li class="node has-shot" id="showsbooking" data-tags="web">
+                  <details class="case-record"
+                    ><summary
+                      ><span class="case-name">Olive ShowsBooking Website</span>
+                      <span class="node-kind"><span lang="vi">Website</span><span lang="en">Website</span></span>
+                      <span class="live"><span lang="vi">Đang chạy</span><span lang="en">Live</span></span>
+                      <span class="expand-mark" aria-hidden="true"></span></summary
+                    ><a
+                      class="node-shot"
+                      href="https://showsbooking.com/"
+                      rel="noopener"
+                      tabindex="-1"
+                      aria-hidden="true"
+                      ><img
+                        src="/img/showsbooking.webp"
+                        alt=""
+                        width="960"
+                        height="606"
+                        loading="lazy"
+                        decoding="async"
+                    /></a>
+                    <div class="node-body">
+                      <p lang="vi"
+                        >Nền tảng đặt nghệ sĩ và bán vé show ở Canada và Việt Nam: tìm nghệ sĩ theo loại và thành phố,
+                        nhận báo giá, chốt setlist, đặt cọc giữ qua Olive đến ngày diễn. Có chế độ tối và chọn vùng,
+                        ngôn ngữ.</p
+                      >
+                      <p lang="en"
+                        >A platform to book performers and sell show tickets in Canada and Vietnam: find artists by
+                        type and city, get quotes, agree the setlist, and pay a deposit held by Olive until the show.
+                        Dark mode and region/language switch.</p
+                      >
+                      <dl class="node-spec">
+                        <div
+                          ><dt lang="vi">Vai trò</dt><dt lang="en">Role</dt
+                          ><dd
+                            ><span lang="vi">Làm toàn bộ: thiết kế, front-end, back-end, triển khai</span
+                            ><span lang="en">Full build: design, front-end, back-end, deployment</span></dd
+                          ></div
+                        >
+                        <div><dt lang="vi">Nền tảng</dt><dt lang="en">Platform</dt><dd>Web</dd></div>
+                        <div><dt lang="vi">Năm</dt><dt lang="en">Year</dt><dd>2026</dd></div>
+                      </dl>
+                      <ul
+                        class="stack-tags"
+                        aria-label="Công nghệ"
+                        data-label-vi="Công nghệ"
+                        data-label-en="Tech stack"
+                        ><li>Next.js</li
+                        ><li>TypeScript</li
+                        ><li>Node.js</li
+                        ><li>Express</li
+                        ><li>JWT</li
+                        ><li>MySQL</li
+                        ><li>Firebase</li
+                        ><li>Docker</li
+                        ><li>GitHub Actions</li></ul
+                      >
+                      <p class="node-links"
+                        ><a href="https://showsbooking.com/" rel="noopener"
+                          ><span lang="vi">Xem trang thật</span><span lang="en">View live site</span></a
+                        ></p
+                      >
+                    </div>
+                  </details></li
+                >
+              </ul>
+              <p class="eco-proof"
+                ><a href="https://olivenow.com/" rel="noopener" aria-label="OliveNow"
+                  ><img src="/img/olivenow.webp" alt="" width="960" height="606" loading="lazy" /></a
+                ><span
+                  ><span lang="vi">Trang tổng của hệ sinh thái, có 5 ngôn ngữ:</span
+                  ><span lang="en">The ecosystem’s main site, in 5 languages:</span>
+                  <a href="https://olivenow.com/" rel="noopener">olivenow.com</a></span
+                ></p
+              >
+            </details>
+
+            <details class="eco group" open>
+              <summary class="eco-head">
+                <span>
+                  <span class="eco-title"
+                    ><span lang="vi">Dự án riêng lẻ</span><span lang="en">Standalone projects</span></span
+                  >
+                  <span class="eco-sub" lang="vi">Phần mềm làm cho từng khách hàng.</span>
+                  <span class="eco-sub" lang="en">Software built for individual clients.</span>
+                </span>
+                <span class="eco-meta"
+                  ><span class="eco-n">1</span> <span lang="vi">sản phẩm</span><span lang="en">products</span></span
+                >
+              </summary>
+              <ul class="tree">
+                <li class="node" id="nail-salon-manager" data-tags="app desktop">
+                  <details class="case-record"
+                    ><summary
+                      ><span class="case-name">Nail Salon Manager</span>
+                      <span class="node-kind"><span lang="vi">Ứng dụng</span><span lang="en">App</span></span>
+                      <span class="internal"
+                        ><span lang="vi">Phần mềm nội bộ của khách</span
+                        ><span lang="en">Client-internal software</span></span
+                      >
+                      <span class="expand-mark" aria-hidden="true"></span></summary
+                    ><div class="node-body">
+                      <p lang="vi"
+                        >Phần mềm quản lý tiệm nail: lịch hẹn, danh sách xoay lượt thợ, giờ làm và doanh thu trong một
+                        màn hình. Có bản tiếng Anh cho tiệm ở Ontario, Canada.</p
+                      >
+                      <p lang="en"
+                        >Nail salon management: appointments, the staff turn list, hours and sales on one screen.
+                        English edition for salons in Ontario, Canada.</p
+                      >
+                      <dl class="node-spec">
+                        <div
+                          ><dt lang="vi">Vai trò</dt><dt lang="en">Role</dt
+                          ><dd
+                            ><span lang="vi">Thiết kế, lập trình</span><span lang="en">Design, development</span></dd
+                          ></div
+                        >
+                        <div><dt lang="vi">Nền tảng</dt><dt lang="en">Platform</dt><dd>Windows</dd></div>
+                        <div><dt lang="vi">Năm</dt><dt lang="en">Year</dt><dd>2026</dd></div>
+                      </dl>
+                      <ul
+                        class="stack-tags"
+                        aria-label="Công nghệ"
+                        data-label-vi="Công nghệ"
+                        data-label-en="Tech stack"
+                        ><li>Electron</li
+                        ><li>HTML</li
+                        ><li>CSS</li
+                        ><li>JavaScript</li
+                        ><li>SQL Server</li></ul
+                      >
+                    </div>
+                  </details></li
+                >
+              </ul>
+            </details>
+
+            <p class="proj-empty" id="proj-empty" hidden>
+              <span lang="vi">Không có dự án nào khớp. Thử từ khoá khác hoặc chọn “Tất cả”.</span>
+              <span lang="en">No projects match. Try another keyword or choose “All”.</span>
+              <button type="button" class="btn secondary" id="proj-reset"
+                ><span lang="vi">Xoá bộ lọc</span><span lang="en">Clear filters</span></button
+              >
+            </p>
+          </div></div
+        ></section
+      ></main
+    ><footer class="closing scene-band" id="lien-he"
+      ><div class="closing-photo" aria-hidden="true"></div><div class="page-lines" aria-hidden="true"></div>
+      <div class="closing-inner inset"
+        ><p class="eyebrow"><span lang="vi">Liên hệ</span><span lang="en">Contact</span></p
+        ><h2>Thức.</h2>
+        <a class="mail" href="mailto:phamthuc45@outlook.com">phamthuc45@outlook.com</a>
+        <div class="end-line"
+          ><span>© <span data-year>2026</span> Phạm Trí Thức</span
+          ><div
+            ><a href="https://github.com/thcphm">GitHub</a
+            ><a href="https://www.facebook.com/thuc.pham.0405/">Facebook</a
+            ><a href="#top"><span lang="vi">Đầu trang</span><span lang="en">Back to top</span></a></div
+          ></div
+        ></div
+      ></footer
+    ></body
+  ></html
+>
