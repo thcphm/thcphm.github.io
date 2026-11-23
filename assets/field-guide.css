@@ -2112,3 +2112,64 @@ html:not(.js) .mast-tools {
   min-height: 100vh;
   min-height: 100svh;
 }
+/* Phones: readable labels and finger-sized tap targets (at least ~40px tall) */
+@media (max-width: 700px) {
+  .case-record .node-kind,
+  .case-record .live,
+  .case-record .internal {
+    font-size: 0.7rem;
+  }
+}
+@media (max-width: 700px), (pointer: coarse) {
+  .source-shot summary,
+  .room-index summary,
+  .project-sample summary {
+    display: flex;
+    align-items: center;
+    min-height: 2.6rem;
+  }
+  .room-index .rooms {
+    gap: 0.45rem;
+  }
+  .room-index .rooms li::after {
+    content: none;
+  }
+  .room-index .rooms li button {
+    min-height: 2.4rem;
+    padding: 0 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: 99rem;
+    text-decoration: none;
+  }
+  .end-line a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.6rem;
+  }
+  .mail {
+    display: inline-block;
+    padding-block: 0.55rem 0.2rem;
+  }
+  .sample-puzzle label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.6rem;
+  }
+  .sample-puzzle input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+@media (max-width: 700px), (pointer: coarse) {
+  /* Bigger invisible hit area for underlined text links, without moving the underline */
+  .textlink,
+  .rescan {
+    position: relative;
+  }
+  .textlink::before,
+  .rescan::before {
+    content: "";
+    position: absolute;
+    inset: -0.5rem -0.25rem;
+  }
+}
