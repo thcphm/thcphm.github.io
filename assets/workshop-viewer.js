@@ -119,8 +119,33 @@
     requestAnchors();
     queue();
   }
-  async function init(force) {
-    if (engine || loading || unavailable || mode !== "model" || !active()) return;
+  // Resolves once the page has been still (no scroll, wheel, touch or key) for a moment and the browser is idle.
+  // The viewer is near already? Then resolve at once: the visitor is waiting for it.
+  function stillness() {
+    return new Promise(function (resolve) {
+      if (active()) return resolve();
+      const events = ["scroll", "wheel", "touchstart", "touchmove", "pointerdown", "keydown"];
+      let timer = 0;
+      const done = function () {
+        events.forEach((name) => window.removeEventListener(name, restart, true));
+        if ("requestIdleCallback" in window) requestIdleCallback(() => resolve(), { timeout: 600 });
+        else resolve();
+      };
+      const restart = function () {
+        clearTimeout(timer);
+        if (active()) return done();
+        timer = setTimeout(done, 450);
+      };
+      events.forEach((name) => window.addEventListener(name, restart, { capture: true, passive: true }));
+      restart();
+    });
+  }
+  // warm = build the model ahead of time, while the visitor is still above it, so that
+  // building the scene and compiling its shaders never freezes the page mid-scroll.
+  async function init(force, warm) {
+    if (engine || loading || unavailable || mode !== "model") return;
+    if (!warm && !active()) return;
+    if (warm && (!entry.open || figure.hidden || !stage.clientWidth)) return;
     if (saveData || (!force && reduced && reduced.matches)) return;
     const canvas = document.createElement("canvas");
     canvas.hidden = true;
@@ -128,14 +153,30 @@
     loading = promise;
     try {
       const module = await promise;
-      if (!active() || mode !== "model") return;
+      if (warm) await stillness();
+      if (mode !== "model" || (!warm && !active())) return;
       host.replaceChildren(canvas);
       canvas.addEventListener("webglcontextlost", loseEngine, { once: true });
-      engine = module.createWorkshopViewer(canvas, {
+      const viewer = module.createWorkshopViewer(canvas, {
         lowPower: Boolean(window.matchMedia && window.matchMedia("(pointer: coarse)").matches),
       });
-      lastW = 0;
-      lastH = 0;
+      if (warm && !active()) {
+        // First render compiles the shaders: do it in a second quiet moment, off screen.
+        await stillness();
+        const width = stage.clientWidth,
+          height = stage.clientHeight;
+        if (width && height && !active()) {
+          viewer.resize(width, height, Math.min(window.devicePixelRatio || 1, 1.5, 1600 / width));
+          viewer.render({ room, yaw: angle * radians, pitch, zoom });
+          lastW = width;
+          lastH = height;
+        }
+      }
+      engine = viewer;
+      if (lastW !== stage.clientWidth || lastH !== stage.clientHeight) {
+        lastW = 0;
+        lastH = 0;
+      }
       queue();
       if (engine.ready) Promise.resolve(engine.ready).then(queue, queue);
     } catch (_) {
@@ -658,4 +699,12 @@
   language();
   followHash();
   sync();
+  // Build the model shortly after the page has loaded, before the visitor scrolls down to it.
+  const warmUp = function () {
+    setTimeout(function () {
+      init(false, true);
+    }, 1200);
+  };
+  if (document.readyState === "complete") warmUp();
+  else window.addEventListener("load", warmUp, { once: true });
 })();
