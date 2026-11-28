@@ -119,7 +119,7 @@
     requestAnchors();
     queue();
   }
-  // Resolves once the page has been still (no scroll, wheel, touch or key) for a moment and the browser is idle.
+  // Resolves once the page has been still (no scroll, wheel, touch or key) for a moment.
   // The viewer is near already? Then resolve at once: the visitor is waiting for it.
   function stillness() {
     return new Promise(function (resolve) {
@@ -128,8 +128,7 @@
       let timer = 0;
       const done = function () {
         events.forEach((name) => window.removeEventListener(name, restart, true));
-        if ("requestIdleCallback" in window) requestIdleCallback(() => resolve(), { timeout: 600 });
-        else resolve();
+        resolve();
       };
       const restart = function () {
         clearTimeout(timer);
@@ -140,37 +139,150 @@
       restart();
     });
   }
-  // warm = build the model ahead of time, while the visitor is still above it, so that
-  // building the scene and compiling its shaders never freezes the page mid-scroll.
+  const pose = () => ({ room, yaw: angle * radians, pitch, zoom });
+  const ratioFor = (width) => Math.min(window.devicePixelRatio || 1, 1.5, 1600 / width);
+  const lowPower = () => Boolean(window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
+  let workerBroken = false;
+  const canWork = () =>
+    !workerBroken &&
+    typeof Worker === "function" &&
+    typeof OffscreenCanvas === "function" &&
+    typeof HTMLCanvasElement.prototype.transferControlToOffscreen === "function";
+
+  // Preferred engine: the model lives in a worker and draws on an OffscreenCanvas. Building the
+  // scene, compiling shaders and rendering then never block scrolling or input on the page.
+  function workerEngine(canvas, width, height) {
+    return new Promise(function (resolve, reject) {
+      let worker,
+        settled = false,
+        points = null,
+        seq = 0,
+        picks = 0,
+        dead = false,
+        size = { w: width, h: height, dpr: ratioFor(width) };
+      const waiting = new Map();
+      const api = {
+        remote: true,
+        resize(w, h, dpr) {
+          size = { w, h, dpr };
+        },
+        render(next) {
+          if (!dead) worker.postMessage({ type: "frame", seq: ++seq, w: size.w, h: size.h, dpr: size.dpr, pose: next });
+        },
+        projectRooms: () => points,
+        pickRoom(x, y) {
+          return new Promise(function (done) {
+            if (dead) return done(null);
+            const id = ++picks;
+            waiting.set(id, done);
+            worker.postMessage({ type: "pick", id, x, y });
+          });
+        },
+        dispose() {
+          if (dead) return;
+          dead = true;
+          try {
+            worker.postMessage({ type: "dispose" });
+          } catch (_) {}
+          setTimeout(() => worker.terminate(), 300);
+        },
+      };
+      const fail = function () {
+        if (settled) {
+          if (engine === api) loseEngine();
+          return;
+        }
+        settled = true;
+        dead = true;
+        try {
+          worker.terminate();
+        } catch (_) {}
+        reject(new Error("workshop worker failed"));
+      };
+      try {
+        const surface = canvas.transferControlToOffscreen();
+        worker = new Worker("/assets/workshop/workshop-worker.js?v=7");
+        worker.onerror = fail;
+        worker.onmessage = function (event) {
+          const message = event.data;
+          if (message.type === "ready") {
+            points = message.points;
+            settled = true;
+            resolve(api);
+          } else if (message.type === "drawn") {
+            // Labels follow the frame the worker actually drew, so they stay glued to the rooms.
+            points = message.points;
+            if (engine === api && mode === "model" && active())
+              updateLabels(room ? null : points);
+          } else if (message.type === "pick") {
+            const done = waiting.get(message.id);
+            waiting.delete(message.id);
+            if (done) done(message.room);
+          } else if (message.type === "lost" || message.type === "error") fail();
+        };
+        worker.postMessage(
+          { type: "init", canvas: surface, lowPower: lowPower(), frame: { ...size, pose: pose() } },
+          [surface],
+        );
+      } catch (_) {
+        fail();
+      }
+    });
+  }
+  // Fallback engine, on the page itself. The scene is built in short slices so input stays responsive.
+  async function pageEngine(canvas, width, height, relaxed) {
+    const module = await import("/assets/workshop/workshop.js?v=7");
+    const pause = () =>
+      new Promise(function (next) {
+        if (relaxed && !active() && "requestIdleCallback" in window) requestIdleCallback(() => next(), { timeout: 250 });
+        else setTimeout(next, 0);
+      });
+    const viewer = await module.createWorkshopViewerAsync(canvas, { lowPower: lowPower(), pause, sliceMs: 8 });
+    if (relaxed) await stillness();
+    await viewer.warm(width, height, ratioFor(width), pose());
+    return viewer;
+  }
+  // warm = build the model ahead of time, while the visitor is still above it.
   async function init(force, warm) {
     if (engine || loading || unavailable || mode !== "model") return;
     if (!warm && !active()) return;
-    if (warm && (!entry.open || figure.hidden || !stage.clientWidth)) return;
+    if (warm && (!entry.open || figure.hidden)) return;
     if (saveData || (!force && reduced && reduced.matches)) return;
-    const canvas = document.createElement("canvas");
-    canvas.hidden = true;
-    const promise = import("/assets/workshop/workshop.js?v=6");
-    loading = promise;
-    try {
-      const module = await promise;
+    const job = (async function () {
       if (warm) await stillness();
-      if (mode !== "model" || (!warm && !active())) return;
+      const width = stage.clientWidth,
+        height = stage.clientHeight;
+      if (!width || !height || mode !== "model") return null;
+      let canvas = document.createElement("canvas");
+      canvas.hidden = true;
       host.replaceChildren(canvas);
-      canvas.addEventListener("webglcontextlost", loseEngine, { once: true });
-      const viewer = module.createWorkshopViewer(canvas, {
-        lowPower: Boolean(window.matchMedia && window.matchMedia("(pointer: coarse)").matches),
-      });
-      if (warm && !active()) {
-        // First render compiles the shaders: do it in a second quiet moment, off screen.
-        await stillness();
-        const width = stage.clientWidth,
-          height = stage.clientHeight;
-        if (width && height && !active()) {
-          viewer.resize(width, height, Math.min(window.devicePixelRatio || 1, 1.5, 1600 / width));
-          viewer.render({ room, yaw: angle * radians, pitch, zoom });
-          lastW = width;
-          lastH = height;
+      let viewer = null;
+      if (canWork()) {
+        try {
+          viewer = await workerEngine(canvas, width, height);
+        } catch (_) {
+          // A transferred canvas cannot be used again: start over with a fresh one on the page.
+          workerBroken = true;
+          canvas = document.createElement("canvas");
+          canvas.hidden = true;
+          host.replaceChildren(canvas);
         }
+      }
+      if (!viewer) {
+        canvas.addEventListener("webglcontextlost", loseEngine, { once: true });
+        viewer = await pageEngine(canvas, width, height, warm);
+      }
+      lastW = width;
+      lastH = height;
+      return viewer;
+    })();
+    loading = job;
+    try {
+      const viewer = await job;
+      if (!viewer) return;
+      if (unavailable) {
+        viewer.dispose();
+        return;
       }
       engine = viewer;
       if (lastW !== stage.clientWidth || lastH !== stage.clientHeight) {
@@ -183,6 +295,7 @@
       loseEngine();
     } finally {
       loading = null;
+      if (!engine && !unavailable && active()) queue();
     }
   }
   function updateLabels(points) {
@@ -339,7 +452,9 @@
           host.firstElementChild.hidden = false;
           poster.hidden = true;
           film.hidden = true;
-          updateLabels(room ? null : engine.projectRooms());
+          // A worker engine reports label positions with each frame it draws (see workerEngine).
+          if (!engine.remote || room) updateLabels(room ? null : engine.projectRooms());
+          else if (markers.hidden) updateLabels(engine.projectRooms());
         } catch (_) {
           loseEngine();
         }
@@ -600,10 +715,15 @@
     endGesture();
     if (tap && !room && engine && mode === "model") {
       const rect = stage.getBoundingClientRect();
-      const id = engine.pickRoom((x - rect.left) / rect.width, (y - rect.top) / rect.height);
-      if (id) {
+      // The page engine answers at once, the worker engine with a promise.
+      const picked = engine.pickRoom((x - rect.left) / rect.width, (y - rect.top) / rect.height);
+      if (picked && typeof picked.then === "function") {
+        picked.then(function (id) {
+          if (id && !room && mode === "model") chooseRoom(id, false);
+        });
+      } else if (picked) {
         if (event.cancelable) event.preventDefault();
-        chooseRoom(id, false);
+        chooseRoom(picked, false);
       }
     }
   }
