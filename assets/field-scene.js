@@ -35,16 +35,19 @@ export function createFieldScene(T, canvas, lost) {
     },
     { once: true },
   );
-  function resize(width, height, mobile) {
+  // quality < 1 while the visitor is scrolling: fewer pixels to shade per frame, sharp again at rest.
+  let quality = 1;
+  function resize(width, height, mobile, scale) {
     w = width;
     h = height;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.05 : 1.4, 1800 / w));
+    quality = scale || 1;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.05 : 1.4, 1800 / w) * quality);
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
   }
   function orbit(key, degrees, tilt, width, height) {
     if (width < 1 || height < 1) return false;
-    if (width !== w || height !== h) resize(width, height, width < 700);
+    if (width !== w || height !== h || quality !== 1) resize(width, height, width < 700, 1);
     if (inspected !== key) {
       world.inspect(key);
       inspected = key;
@@ -73,9 +76,10 @@ export function createFieldScene(T, canvas, lost) {
       chapter = "";
       lastP = -1;
     }
-    const resized = w !== width || h !== height;
+    const scale = survey >= 0 ? 0.7 : 1;
+    const resized = w !== width || h !== height || scale !== quality;
     if (!resized && p === lastP && survey === lastSurvey && key === chapter && mobile === portrait) return;
-    if (resized) resize(width, height, mobile);
+    if (resized) resize(width, height, mobile, scale);
     if (key !== chapter) {
       chapter = key;
       world.setChapter(key);

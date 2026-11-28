@@ -177,14 +177,126 @@
   function engineLost() {
     engineFailed = true;
     engine = null;
+    if (worldWorker) {
+      try {
+        worldWorker.terminate();
+      } catch (_) {}
+      worldWorker = null;
+    }
     markOrbit(false);
     document.getElementById("world-canvas").hidden = true;
     askFrame();
+  }
+  // Preferred: the landscape lives in a worker and draws on an OffscreenCanvas. Loading Three.js,
+  // building the world and rendering each scroll frame then never block the page.
+  let worldWorker = null,
+    workerFailed = false,
+    jobSeq = 0,
+    lastJob = "";
+  const canWork = () =>
+    !workerFailed &&
+    typeof Worker === "function" &&
+    typeof OffscreenCanvas === "function" &&
+    typeof HTMLCanvasElement.prototype.transferControlToOffscreen === "function";
+  function currentJob() {
+    if (dialog && dialog.open)
+      return {
+        kind: "orbit",
+        args: [orbitView.view, orbitView.angle, orbitView.tilt, orbitHolder.clientWidth, orbitHolder.clientHeight],
+      };
+    return {
+      kind: "draw",
+      args: [
+        progress,
+        chapters[Math.max(current, 0)],
+        narrow.matches,
+        stage.clientWidth,
+        stage.offsetHeight || window.innerHeight,
+        -1,
+      ],
+    };
+  }
+  function postJob(kind, args) {
+    const key = kind + ":" + args.join(",");
+    if (!worldWorker || key === lastJob) return;
+    lastJob = key;
+    worldWorker.postMessage({
+      type: "frame",
+      job: { kind, args, seq: ++jobSeq, dpr: window.devicePixelRatio || 1 },
+    });
+  }
+  function launchWorker() {
+    const canvas = document.getElementById("world-canvas");
+    let settled = false;
+    const fail = function () {
+      if (worldWorker) {
+        try {
+          worldWorker.terminate();
+        } catch (_) {}
+        worldWorker = null;
+      }
+      workerFailed = true;
+      // A canvas handed to a worker cannot draw on the page again: swap in a fresh one.
+      const live = document.getElementById("world-canvas");
+      const fresh = live.cloneNode(false);
+      fresh.hidden = true;
+      live.replaceWith(fresh);
+      if (settled) {
+        engineLost();
+        return;
+      }
+      settled = true;
+      loadingEngine = false;
+      launch();
+    };
+    try {
+      const surface = canvas.transferControlToOffscreen();
+      worldWorker = new Worker("/assets/field-worker.js?v=2", { type: "module" });
+      worldWorker.onerror = fail;
+      worldWorker.onmessage = function (event) {
+        const message = event.data;
+        if (message.type === "ready") {
+          if (settled) return;
+          settled = true;
+          const proxy = {
+            draw(...args) {
+              postJob("draw", args);
+            },
+            orbit(...args) {
+              if (args[3] < 1 || args[4] < 1) return false;
+              postJob("orbit", args);
+              return true;
+            },
+          };
+          // Let the first frame reach the screen before the canvas replaces the still image.
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              loadingEngine = false;
+              if (engineFailed || !worldWorker) return;
+              engine = proxy;
+              lastJob = "";
+              askFrame();
+            });
+          });
+        } else if (message.type === "lost" || message.type === "error") fail();
+      };
+      const job = currentJob();
+      worldWorker.postMessage(
+        { type: "init", canvas: surface, job: { ...job, seq: ++jobSeq, dpr: window.devicePixelRatio || 1 } },
+        [surface],
+      );
+    } catch (_) {
+      fail();
+    }
   }
   function launch() {
     startupScheduled = false;
     if (!allowedLive() || engine || loadingEngine || engineFailed) return;
     loadingEngine = true;
+    if (canWork()) {
+      launchWorker();
+      return;
+    }
     const component = document.createElement("script");
     if (!("noModule" in component)) {
       engineFailed = true;
@@ -192,7 +304,7 @@
       return;
     }
     component.type = "module";
-    component.src = "/assets/field-scene.js";
+    component.src = "/assets/field-scene.js?v=2";
     function failed() {
       loadingEngine = false;
       engineLost();
