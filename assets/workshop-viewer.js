@@ -801,7 +801,7 @@
         near = entries[0].isIntersecting;
         sync();
       },
-      { rootMargin: "170px 0px" },
+      { rootMargin: "320px 0px" },
     ).observe(figure);
   } else {
     near = true;
@@ -819,12 +819,6 @@
   language();
   followHash();
   sync();
-  // Build the model shortly after the page has loaded, before the visitor scrolls down to it.
-  const warmUp = function () {
-    setTimeout(function () {
-      init(false, true);
-    }, 1200);
-  };
-  if (document.readyState === "complete") warmUp();
-  else window.addEventListener("load", warmUp, { once: true });
+  // Nothing is built while the visitor is at the top of the page: the hero has its own 3D scene and
+  // the two would compete for the GPU. The engine starts when the figure comes near (see the observer).
 })();
