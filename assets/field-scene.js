@@ -96,7 +96,38 @@ export function createFieldScene(T, canvas, lost) {
     lastSurvey = survey;
     portrait = mobile;
   }
-  return { draw, orbit };
+  // Compile every shader in the background (KHR_parallel_shader_compile) and wait until all are linked
+  // before the first frame. Otherwise the GPU compiles them during that frame and the whole page,
+  // not just this canvas, stops for a third of a second or more.
+  async function prepare(p, key, mobile, width, height) {
+    if (width < 1 || height < 1) return;
+    const gl = renderer.getContext();
+    const ext = gl.getExtension("KHR_parallel_shader_compile");
+    if (!ext) return;
+    resize(width, height, mobile, 1);
+    chapter = key;
+    world.setChapter(key);
+    const pose = sampleFieldPose(p, mobile);
+    camera.position.fromArray(pose.eye);
+    target.fromArray(pose.look);
+    camera.lookAt(target);
+    camera.fov = pose.fov;
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    scene.updateMatrixWorld(true);
+    // Reading the link log right after linking would wait for the compiler, which defeats the purpose.
+    renderer.debug.checkShaderErrors = false;
+    renderer.compile(scene, camera);
+    renderer.debug.checkShaderErrors = true;
+    const programs = renderer.info.programs.map((entry) => entry.program);
+    const deadline = performance.now() + 8000;
+    while (
+      performance.now() < deadline &&
+      programs.some((program) => !gl.getProgramParameter(program, ext.COMPLETION_STATUS_KHR))
+    )
+      await new Promise((resolve) => setTimeout(resolve, 16));
+  }
+  return { draw, orbit, prepare };
 }
 const tour = document.querySelector(".tour");
 if (tour) tour.dispatchEvent(new CustomEvent("field-engine", { detail: createFieldScene }));

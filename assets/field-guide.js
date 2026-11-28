@@ -251,7 +251,7 @@
     };
     try {
       const surface = canvas.transferControlToOffscreen();
-      worldWorker = new Worker("/assets/field-worker.js?v=2", { type: "module" });
+      worldWorker = new Worker("/assets/field-worker.js?v=3", { type: "module" });
       worldWorker.onerror = fail;
       worldWorker.onmessage = function (event) {
         const message = event.data;
@@ -304,7 +304,7 @@
       return;
     }
     component.type = "module";
-    component.src = "/assets/field-scene.js?v=2";
+    component.src = "/assets/field-scene.js?v=3";
     function failed() {
       loadingEngine = false;
       engineLost();
@@ -322,11 +322,41 @@
     three.onerror = failed;
     document.head.append(three);
   }
+  // Starting the 3D scene costs the GPU about a third of a second that no thread can hide, and the whole
+  // page stops while it happens. So it starts only once the visitor has been still for a moment; while
+  // they scroll, the still images and the pre-rendered film carry the tour. Opening the 360 view starts
+  // it at once, because the visitor is waiting for it there.
+  let lastActivity = performance.now();
+  for (const name of ["scroll", "wheel", "touchstart", "touchmove", "pointerdown", "keydown"])
+    window.addEventListener(
+      name,
+      function () {
+        lastActivity = performance.now();
+      },
+      { capture: true, passive: true },
+    );
+  function whenStill(run) {
+    const wait = dialog && dialog.open ? 0 : 900 - (performance.now() - lastActivity);
+    if (wait > 0) {
+      setTimeout(function () {
+        whenStill(run);
+      }, wait + 30);
+      return;
+    }
+    if ("requestIdleCallback" in window && !(dialog && dialog.open))
+      window.requestIdleCallback(
+        function () {
+          if (performance.now() - lastActivity < 900) whenStill(run);
+          else run();
+        },
+        { timeout: 400 },
+      );
+    else run();
+  }
   function scheduleEngine() {
     if (!allowedLive() || engine || loadingEngine || startupScheduled || engineFailed) return;
     startupScheduled = true;
-    if ("requestIdleCallback" in window) window.requestIdleCallback(launch, { timeout: 900 });
-    else setTimeout(launch, 100);
+    whenStill(launch);
   }
   if (tour)
     tour.addEventListener("field-engine", function (event) {

@@ -48,10 +48,13 @@ self.onmessage = async function (event) {
   if (message.type === "init") {
     try {
       await import("/assets/vendor/three.min.js");
-      const module = await import("/assets/field-scene.js?v=2");
+      const module = await import("/assets/field-scene.js?v=3");
       self.devicePixelRatio = message.job.dpr || 1;
       scene = module.createFieldScene(self.THREE, message.canvas, () => postMessage({ type: "lost" }));
-      const job = pending || message.job;
+      const first = pending || message.job;
+      if (scene.prepare && first.kind === "draw") await scene.prepare(...first.args.slice(0, 5));
+      // The visitor may have scrolled while the shaders compiled: draw the newest position.
+      const job = pending || first;
       pending = null;
       run(job);
       postMessage({ type: "ready", seq: job.seq });
